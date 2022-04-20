@@ -6,11 +6,32 @@
 <h2>New Branch</h2> 
 Welcome to your new app.
 
+
+
+<label>Your Name
+    <input type='text' @bind=userName/>
+</label>
+<button @onclick=callApi>Greet Me!</button>
+<p>@apiResponse</p>
+
+
 @code {
 
-
-
-
+    string userName;
+    string apiResponse = "Enter your name and click 'Greet Me'";
+    int timesClicked = 0;
+    int increment = 1;
+    DateTime lastClicked;
+    void buttonClick()
+    {
+        timesClicked+=increment;
+        lastClicked = DateTime.Now;
+    }
+    async Task callApi()
+    {
+        var httpClient = new HttpClient();
+        apiResponse = await httpClient.GetStringAsync($"/api/HttpTrigger1?name={userName}");
+    }
 
 
 
